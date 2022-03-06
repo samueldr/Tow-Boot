@@ -56,6 +56,7 @@ in
       armTrustedFirmwareAllwinner
       armTrustedFirmwareRK3399
       armTrustedFirmwareS905
+      armTrustedFirmwareIMX8MQ
     ;
 
     crustFirmware = final.callPackage ./crust-firmware {

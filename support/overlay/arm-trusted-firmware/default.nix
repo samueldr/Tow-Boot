@@ -119,4 +119,11 @@ in {
     extraMeta.platforms = ["aarch64-linux"];
     filesToInstall = [ "build/${platform}/release/bl31.bin"];
   };
+
+  armTrustedFirmwareIMX8MQ = buildArmTrustedFirmware rec {
+    extraMakeFlags = [ "bl31" ];
+    platform = "imx8mq";
+    extraMeta.platforms = ["aarch64-linux"];
+    filesToInstall = [ "build/${platform}/release/bl31.bin"];
+  };
 }
