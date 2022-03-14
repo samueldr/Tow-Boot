@@ -23,7 +23,10 @@ let
   secondOffset = 16384; # in sectors
   sectorSize = 512;
 
-  anyRockchip = lib.any (v: v) [cfg.rockchip-rk3399.enable];
+  anyRockchip = lib.any (v: v) [
+    cfg.rockchip-rk3399.enable
+    cfg.rockchip-rk3566.enable
+  ];
   isPhoneUX = config.Tow-Boot.phone-ux.enable;
 in
 {
@@ -35,6 +38,12 @@ in
         description = "Enable when SoC is Rockchip RK3399";
         internal = true;
       };
+      rockchip-rk3566.enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Enable when SoC is Rockchip RK3566";
+        internal = true;
+      };
     };
   };
 
@@ -42,6 +51,7 @@ in
     {
       hardware.socList = [
         "rockchip-rk3399"
+        "rockchip-rk3566"
       ];
     }
     (mkIf cfg.rockchip-rk3399.enable {
