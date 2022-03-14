@@ -28,6 +28,7 @@ let
   SOCIdentifiers = [
     "rk3328"
     "rk3399"
+    "rk3566"
   ];
 
   # Supported identifiers with the rockchip prefix.
@@ -59,6 +60,12 @@ in
         type = types.bool;
         default = false;
         description = "Enable when SoC is Rockchip RK3399";
+        internal = true;
+      };
+      rockchip-rk3566.enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Enable when SoC is Rockchip RK3566";
         internal = true;
       };
     };
