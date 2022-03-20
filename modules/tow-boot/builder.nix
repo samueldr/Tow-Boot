@@ -142,12 +142,12 @@ in
           ''
             echo ':: Patching baud rate'
             (PS4=" $ "
-            for f in configs/*rk3399* configs/*rk3328*; do
+            for f in configs/*rk3399* configs/*rk3328* configs/*rk3566*; do
               (set -x
               sed -i -e 's/CONFIG_BAUDRATE=1500000/CONFIG_BAUDRATE=115200/' "$f"
               )
             done
-            for f in arch/arm/dts/*rk3399*.dts* arch/arm/dts/*rk3328*.dts*; do
+            for f in arch/arm/dts/*rk3399*.dts* arch/arm/dts/*rk3328*.dts* arch/arm/dts/*rk3566*.dts*; do
               (set -x
               sed -i -e 's/serial2:1500000n8/serial2:115200n8/' "$f"
               )
