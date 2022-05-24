@@ -22,7 +22,12 @@ let
   secondOffset = 16384; # in sectors
   sectorSize = 512;
 
-  anyRockchip = lib.any (v: v) [cfg.rockchip-rk3399.enable];
+  rockchipSOCs = [
+    "rockchip-rk3328"
+    "rockchip-rk3399"
+  ];
+
+  anyRockchip = lib.any (soc: config.hardware.socs.${soc}.enable) rockchipSOCs;
   isPhoneUX = config.Tow-Boot.phone-ux.enable;
   withSPI = config.hardware.SPISize != null;
   useSpi2K4Kworkaround = cfg.rockchip-rk3399.enable;
@@ -36,6 +41,13 @@ in
 {
   options = {
     hardware.socs = {
+      rockchip-rk3328.enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Enable when SoC is Rockchip RK3328";
+        internal = true;
+      };
+
       rockchip-rk3399.enable = mkOption {
         type = types.bool;
         default = false;
@@ -47,11 +59,9 @@ in
 
   config = mkMerge [
     {
-      hardware.socList = [
-        "rockchip-rk3399"
-      ];
+      hardware.socList = rockchipSOCs;
     }
-    (mkIf cfg.rockchip-rk3399.enable {
+    (mkIf anyRockchip {
       system.system = "aarch64-linux";
       Tow-Boot = {
         config = [
@@ -107,13 +117,12 @@ in
           ])
         ];
         firmwarePartition = {
-            offset = partitionOffset * 512; # 32KiB into the image, or 64 × 512 long sectors
+            offset = partitionOffset * sectorSize; # 32KiB into the image, or 64 × 512 long sectors
             length = firmwareMaxSize + (secondOffset * sectorSize); # in bytes
           }
         ;
         builder = {
           additionalArguments = {
-            BL31 = "${pkgs.Tow-Boot.armTrustedFirmwareRK3399}/bl31.elf";
             inherit
               firmwareMaxSize
               partitionOffset
@@ -153,6 +162,14 @@ in
           ];
         };
       };
+    })
+
+    (mkIf cfg.rockchip-rk3328.enable {
+      Tow-Boot.builder.additionalArguments.BL31 = "${pkgs.Tow-Boot.armTrustedFirmwareRK3328}/bl31.elf";
+    })
+
+    (mkIf cfg.rockchip-rk3399.enable {
+      Tow-Boot.builder.additionalArguments.BL31 = "${pkgs.Tow-Boot.armTrustedFirmwareRK3399}/bl31.elf";
     })
 
     # Documentation fragments
