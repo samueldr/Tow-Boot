@@ -25,6 +25,11 @@ let
   anyRockchip = lib.any (v: v) [cfg.rockchip-rk3399.enable];
   isPhoneUX = config.Tow-Boot.phone-ux.enable;
   withSPI = config.hardware.SPISize != null;
+  chipName =
+         if cfg.rockchip-rk3328.enable then "rk3328"
+    else if cfg.rockchip-rk3399.enable then "rk3399"
+    else throw "chipName needs to be defined for SoC."
+  ;
 in
 {
   options = {
@@ -118,7 +123,10 @@ in
             (mkIf (variant == "spi") ''
               echo ":: Preparing image for SPI flash..."
               (PS4=" $ "; set -x
-              tools/mkimage -n rk3399 -T rkspi -d tpl/u-boot-tpl-dtb.bin:spl/u-boot-spl-dtb.bin spl.bin
+              tools/mkimage \
+                -n ${chipName} \
+                -T "rkspi" \
+                -d "tpl/u-boot-tpl-dtb.bin:spl/u-boot-spl-dtb.bin" spl.bin
               # 512K here is 0x80000 CONFIG_SYS_SPI_U_BOOT_OFFS
               cat <(dd if=spl.bin bs=512K conv=sync) u-boot.itb > $out/binaries/Tow-Boot.$variant.bin
               )
