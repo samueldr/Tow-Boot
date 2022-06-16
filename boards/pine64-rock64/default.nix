@@ -9,6 +9,7 @@
   hardware = {
     soc = "rockchip-rk3328";
     SPISize = 16 * 1024 * 1024; # 16 MiB
+    withDisplay = false;
   };
 
   Tow-Boot = {
