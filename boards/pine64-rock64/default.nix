@@ -14,5 +14,8 @@
 
   Tow-Boot = {
     defconfig = "rock64-rk3328_defconfig";
+    patches = [
+      ./0001-board-rock64-Enable-booting-from-SPI-flash.patch
+    ];
   };
 }
