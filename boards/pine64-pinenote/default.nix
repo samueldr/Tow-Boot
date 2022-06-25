@@ -95,5 +95,4 @@ in
       # XXX ./0001-pine64-pinenote-device-enablement.patch
     ];
   };
-  documentation.sections.installationInstructions = builtins.readFile ./INSTALLING.md;
 }
