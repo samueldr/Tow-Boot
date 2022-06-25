@@ -58,6 +58,15 @@ in
       })
     ];
 
+    uBootVersion = "2022.01";
+    useDefaultPatches = false; # XXX
+    src = pkgs.fetchFromGitLab {
+      owner = "pgwipeout";
+      repo = "u-boot-quartz64";
+      rev = "ae59228edff4cb3d4abb1b44b470fafa352601a7"; # quartz64
+      sha256 = "sha256-4+tqa4Qi7pd84gwGKlBWd8ktSPn8d7T4YDJ9T9j3XNU=";
+    };
+
     withLogo = false; # XXX
 
     builder.preBuild = ''
