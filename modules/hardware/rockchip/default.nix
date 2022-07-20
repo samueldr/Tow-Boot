@@ -29,6 +29,7 @@ let
     "rk3328"
     "rk3399"
     "rk3566"
+    "rk3588"
   ];
 
   # Supported identifiers with the rockchip prefix.
@@ -66,6 +67,12 @@ in
         type = types.bool;
         default = false;
         description = "Enable when SoC is Rockchip RK3566";
+        internal = true;
+      };
+      rockchip-rk3588.enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Enable when SoC is Rockchip RK3588";
         internal = true;
       };
     };
