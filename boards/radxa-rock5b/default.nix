@@ -85,6 +85,7 @@ in
     ];
 
     patches = [
+      ./patches/0001-BACKPORT-cmd-pxe-Increase-maximum-path-length.patch
     ];
   };
 }
