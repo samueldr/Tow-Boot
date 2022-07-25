@@ -46,6 +46,13 @@ let
     else if cfg.rockchip-rk3399.enable then "rk3399"
     else throw "chipName needs to be defined for SoC."
   ;
+
+  # BSP versions are expected to be something like 2017.09
+  # We can change the underlying logic if in the future they start
+  # shipping BSP based on 2021.01 or newer.
+  # For the time being it's okay enough, considering Tow-Boot does
+  # not aim to support older mainline U-Boot releases.
+  isBSP = !(versionAtLeast config.Tow-Boot.uBootVersion "2021.01");
 in
 {
   options = {
@@ -86,7 +93,7 @@ in
       system.system = "aarch64-linux";
       Tow-Boot = {
         config = [
-          (mkIf withSPI (helpers: with helpers; {
+          (mkIf (withSPI && !isBSP) (helpers: with helpers; {
             # SPI boot Support
             MTD = yes;
             DM_MTD = yes;
@@ -106,7 +113,8 @@ in
             CMD_POWEROFF = no;
           })
         ];
-        patches = mkMerge [
+        # Guard against the patches being applied to the vendor BSP
+        patches = mkIf (!isBSP) (mkMerge [
           [
             ./0001-HACK-efi_runtime-pretend-we-can-t-reset.patch
           ]
@@ -136,7 +144,7 @@ in
               sha256 = "sha256-gjHwZWIPUzWMUk2+7Mhd4XJuorBluVL9J9LaO9fUaKw=";
             })
           ])
-        ];
+        ]);
         firmwarePartition = {
             offset = partitionOffset * sectorSize; # 32KiB into the image, or 64 × 512 long sectors
             length = firmwareMaxSize + (secondOffset * sectorSize); # in bytes
