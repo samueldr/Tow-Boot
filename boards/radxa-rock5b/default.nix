@@ -20,6 +20,7 @@ in
 
   hardware = {
     soc = "rockchip-rk3588";
+    SPISize = 16 * 1024 * 1024; # 16 MiB
   };
 
   Tow-Boot = {
@@ -28,9 +29,13 @@ in
       (helpers: with helpers; {
         USB_GADGET_MANUFACTURER = freeform ''"Radxa"'';
       })
-      # Undo some weirdness
       (helpers: with helpers; {
+        EFI_LOADER = yes;
         SYS_MMCSD_RAW_MODE_U_BOOT_USE_PARTITION = no;
+        # Offset for U-Boot proper is hardcoded in our builder
+        # 0x80000 / 512
+        MTD_BLK_U_BOOT_OFFS = freeform "0x400";
+        SPL_LIBDISK_SUPPORT = no;
       })
       # Not present in this older revision
       (helpers: with helpers; {
@@ -39,6 +44,19 @@ in
         CMD_CLS = lib.mkForce (option no);
         SYSINFO = lib.mkForce (option no);
         SYSINFO_SMBIOS = lib.mkForce (option no);
+      })
+      # Environment is not supported with the BSP build
+      (helpers: with helpers; {
+        ENV_IS_NOWHERE = lib.mkForce yes;
+        ENV_ADDR = lib.mkForce no;
+        ENV_IS_IN_SPI_FLASH = lib.mkForce no;
+        ENV_OFFSET = lib.mkForce no;
+        ENV_SECT_SIZE = lib.mkForce no;
+      })
+      (helpers: with helpers; {
+        OPTEE_CLIENT = no;
+        ANDROID_BOOTLOADER = no;
+        ANDROID_BOOT_IMAGE = no;
       })
     ];
 
@@ -86,6 +104,8 @@ in
 
     patches = [
       ./patches/0001-BACKPORT-cmd-pxe-Increase-maximum-path-length.patch
+      ./patches/0001-rk3588_common-Disable-mtd-boot-target.patch
+      ./patches/0001-part_efi-Avoid-deluge-of-print-when-device-is-not-GP.patch
     ];
   };
 }

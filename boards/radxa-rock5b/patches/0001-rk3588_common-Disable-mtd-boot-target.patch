@@ -1,0 +1,25 @@
+From 58c68a52620e145c7796fe9a83aa2863a12e739d Mon Sep 17 00:00:00 2001
+From: Samuel Dionne-Riel <samuel@dionne-riel.com>
+Date: Sun, 24 Jul 2022 20:36:08 -0400
+Subject: [PATCH] rk3588_common: Disable mtd boot target
+
+It's noisy, and not relevant for our needs.
+---
+ include/configs/rk3588_common.h | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/include/configs/rk3588_common.h b/include/configs/rk3588_common.h
+index 751e921d37a..5a3daf681f2 100644
+--- a/include/configs/rk3588_common.h
++++ b/include/configs/rk3588_common.h
+@@ -71,7 +71,6 @@
+ #include <config_distro_bootcmd.h>
+ 
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+-	BOOTENV_SHARED_MTD	\
+ 	ENV_MEM_LAYOUT_SETTINGS \
+ 	"fdtfile=" FDTFILE \
+ 	"partitions=" PARTS_RKIMG \
+-- 
+2.35.1
+
