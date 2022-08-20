@@ -56,6 +56,8 @@ in
             # Amlogic already prefers SD to eMMC
           ])
           ;
+          "2022.07" = let base = ../../support/u-boot/2022.07/patches; in [
+          ];
         };
       in
         if patchSets ? ${uBootVersion}
