@@ -82,6 +82,7 @@ in
         '';
         patches = [
           ./0001-sunxi-Use-mmc_get_env_dev-only-if-relevant.patch
+          ./0001-sunxi-Predictable-boot-order.patch
         ];
       };
     })
