@@ -1,11 +1,10 @@
-let
-  celunPath = import ../celun.nix;
-in
 { device ? null
 , configuration
-}@args:
+# `import` able reference to celun
+, celun
+}:
 
-import (celunPath + "/lib/eval-with-configuration.nix") (args // {
+import (celun + "/lib/eval-with-configuration.nix") ({
   inherit device;
   verbose = true;
   configuration = {
