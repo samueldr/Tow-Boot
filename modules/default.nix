@@ -14,6 +14,7 @@ in
     ./device.nix
     ./documentation.nix
     ./helpers.nix
+    ./inputs.nix
     ./kconfig.nix
     ./metadata.nix
     ./overlays.nix
