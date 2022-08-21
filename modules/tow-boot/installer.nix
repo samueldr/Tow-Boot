@@ -485,6 +485,7 @@ in
           eval =
             (import ../../embedded-linux-os/touch-installer-app {
               inherit (config.inputs) celun;
+              inherit pkgs;
               device = ../../embedded-linux-os/devices + "/${config.device.identifier}";
               configuration = {
                 Tow-Boot.installer.config = {
@@ -554,6 +555,7 @@ in
           eval =
             (import ../../embedded-linux-os/touch-installer-app {
               inherit (config.inputs) celun;
+              inherit pkgs;
               device = ../../embedded-linux-os/devices + "/${config.device.identifier}";
               configuration = {
                 Tow-Boot.installer.config = {
