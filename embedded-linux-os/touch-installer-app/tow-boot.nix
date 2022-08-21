@@ -45,6 +45,7 @@ in
     Tow-Boot.installer.outputs.installerProgram = pkgs.callPackage (
       { stdenv
       , fetchFromGitHub
+      , fetchpatch
 
       , pkg-config
 
@@ -59,6 +60,15 @@ in
       , storageMedia
       , payload
       }:
+
+      let
+        externalUsesPatch =
+          fetchpatch {
+            url = "https://github.com/mobile-nixos/lvgui/pull/2.patch";
+            sha256 = "sha256-vQNpt4GqQR48LS6K1x8ZYVHAJdqREFEQWDJOt+MjJeI=";
+          }
+        ;
+      in
       stdenv.mkDerivation {
         name = "tow-boot-installer-gui";
         src = fetchFromGitHub {
@@ -70,8 +80,8 @@ in
         lvgui = fetchFromGitHub {
           owner = "mobile-nixos";
           repo = "lvgui";
-          rev = "3860789bb3bafc3013f11a21fe4660ad67a0d0ff";
-          sha256 = "sha256-nTlq1iexQZ/2O/N3TdN36cWbBJB0y/w0mt+K9y0tS0s=";
+          rev = "253618177e2d36f9c5aae1ca136baed8f376d746";
+          sha256 = "sha256-Eih45L9xaemp7OYt397yf2JsnL9+WMqC4CTz74ZSfrI=";
         };
 
         nativeBuildInputs = [
@@ -88,6 +98,9 @@ in
         postPatch = ''
           cp -r "$lvgui" lvgui
           chmod -R +w lvgui
+          (cd lvgui
+          patch -p1 < "${externalUsesPatch}"
+          )
         '';
 
         CFLAGS = [
