@@ -484,6 +484,7 @@ in
           targetBlockDevice = lib.mkDefault "/dev/mtdblock0";
           eval =
             (import ../../embedded-linux-os/touch-installer-app {
+              inherit (config.inputs) celun;
               device = ../../embedded-linux-os/devices + "/${config.device.identifier}";
               configuration = {
                 Tow-Boot.installer.config = {
@@ -552,6 +553,7 @@ in
         touch-installer = {
           eval =
             (import ../../embedded-linux-os/touch-installer-app {
+              inherit (config.inputs) celun;
               device = ../../embedded-linux-os/devices + "/${config.device.identifier}";
               configuration = {
                 Tow-Boot.installer.config = {
