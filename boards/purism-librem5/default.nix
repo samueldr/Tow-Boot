@@ -91,6 +91,8 @@ in
       (helpers: with helpers; {
         # I assume due to the missing display support in defconfig?
         CMD_CLS = lib.mkForce no;
+        # Not in the unpatched system
+        CMD_PAUSE = lib.mkForce no;
       })
 
       #(helpers: with helpers; {
