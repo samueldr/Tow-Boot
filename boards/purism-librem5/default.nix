@@ -45,7 +45,7 @@ in
     # TODO: check if it is configured to start from SPI.
     # SPISize = 16 / 8 * 1024 * 1024; # 16Mb → 2MB
     # TODO: determine the index
-    # mmcBootIndex = "?";
+    mmcBootIndex = "1";
   };
 
   Tow-Boot = {
