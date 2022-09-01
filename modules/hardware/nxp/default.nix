@@ -42,7 +42,8 @@ in
           cp -v flash.bin $out/binaries/Tow-Boot.$variant.bin
         '';
         installer.additionalMMCBootCommands = ''
-          mmc partconf ${mmcBootIndex} 1 1 1
+          mmc dev 0 ${mmcBootIndex}
+          mmc partconf 0 0 ${mmcBootIndex} 0
         '';
       };
 
