@@ -64,8 +64,8 @@ in
     src = pkgs.fetchFromGitHub {
       owner = "radxa";
       repo = "u-boot";
-      rev = "b94363dedbaa44955194c6eae1ae022f797b3b70"; # stable-5.10-rock5
-      sha256 = "sha256-c7DF5tq1QTFSZFemHfWdnE6ZMbKVhS69+FxdOxLxJFQ=";
+      rev = "75b12f8295f1216d8f871a23fca37d4c990d508d"; # stable-5.10-rock5
+      sha256 = "sha256-gjDLj7ex7cccvpkvSrwJo4hiHOT8BFAtM9uAZ1DezcY=";
     };
 
     # This is based on the Rockchip BSP
