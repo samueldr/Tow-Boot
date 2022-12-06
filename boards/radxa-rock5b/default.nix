@@ -54,6 +54,10 @@ in
         ENV_SECT_SIZE = lib.mkForce no;
       })
       (helpers: with helpers; {
+        DISABLE_CONSOLE = no;
+        CMD_BOOTEFI_HELLO_COMPILE = no;
+      })
+      (helpers: with helpers; {
         OPTEE_CLIENT = no;
         ANDROID_BOOTLOADER = no;
         ANDROID_BOOT_IMAGE = no;
