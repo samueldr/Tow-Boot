@@ -13,7 +13,9 @@ These differences exist to make future Tow-Boot builds a drop-in replacement.
 
  - SD boot
  - eMMC boot
+ - NVMe boot
  - SPI install
+ - USB Gadget (Mass Storage)
 
 ## Not working
 
@@ -24,69 +26,52 @@ These differences exist to make future Tow-Boot builds a drop-in replacement.
 
 (Assumed to not work)
 
- - NVMe boot
  - EFI
 
 ## Installation
 
-The shared disk image can be used, it will work as expected.
+The shared disk image can be used, it should work as expected.
 
 ### Flashing to SPI
 
 The `spi.installer.img` image does not support the menu-based flashing
 interface when used with a vendor BSP.
 
-You can write the `spi.installer.img` image to an SD card, then with
+For the time being, writing to SPI flash involves the vendor programmer and
+"maskrom" mode.
 
-```
-=> load mmc 1:2 $kernel_addr_r Tow-Boot.spi.bin
-1873408 bytes read in 152 ms (11.8 MiB/s)
+See the vendor information here:
 
-=> blocksize=0x200
-=> setexpr length $filesize + $blocksize
-=> setexpr length $length - 1
-=> setexpr length $length / $blocksize
+ - https://wiki.radxa.com/Rock5/install/spi
 
-=> mtd_blk dev 2
+> **NOTE**: if you are booting in "maskrom" mode using the button, make
+> sure to remove **all** storage mediums, including SD, eMMC and NVMe.
+> Depending on which component handles the download mode writes, it may
+> end-up writing to any of those devices.
 
-Device 2: Vendor: 0x2207 Rev: V1.00 Prod: sfc_nor
-            Type: Hard Disk
-            Capacity: 16.0 MB = 0.0 GB (32768 x 512)
-... is now current device
-
-=> mtd_blk write $kernel_addr_r 0 $length
-```
-
-<!--
-
-load mmc 1:2 $kernel_addr_r Tow-Boot.spi.bin
-blocksize=0x200; setexpr length $filesize + $blocksize; setexpr length $length - 1; setexpr length $length / $blocksize
-mtd_blk dev 2; mtd_blk write $kernel_addr_r 0 $length
-
--->
 
 ### "Unbricking" wrong SPI Flash
 
 > **NOTE** In normal operation this will not be needed. These instructions
 > are left as a hint for developers.
 
-<!--
+Try first using the MASKROM button on your board.
 
-TODO: verify this works
+If your board is an older revision, or for some reason using the MASKROM
+button does not start the system in "maskrom" mode, follow through.
 
-You will need to short GND and SCLK on the SPI chip. This chip is at
+To make the SoC skip the SPI Flash during startup, you will need to short
+`GND` and `SCLK` on the SPI chip. This chip is at
 position *U4300* on V1.3 of the board.
 
 ```
-            _________
-CS#     o -|o       8|-  VCC
-SO/SIO1   -|2       7|-  RESET#/SIO3
-WP#/SIO2  -|3       6|-  SCLK
-GND       -|4       5|-  SI/SIO0
-            ¯¯¯¯¯¯¯¯¯
+            ___________
+CS#     o -|o         8|-  VCC
+SO/SIO1   -|2         7|-  RESET#/SIO3
+WP#/SIO2  -|3         6|-  SCLK
+GND       -|4         5|-  SI/SIO0
+            ¯¯¯¯¯¯¯¯¯¯¯
 ```
 
 > **NOTE**: The `o` in this crude drawing refer to a silkscreen mark (white)
 >           on the board and to a marked dot on the upper left of the chip.
-
--->
