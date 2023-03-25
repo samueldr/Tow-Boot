@@ -112,6 +112,7 @@ in
       ./patches/0001-BACKPORT-cmd-pxe-Increase-maximum-path-length.patch
       ./patches/0001-rk3588_common-Disable-mtd-boot-target.patch
       ./patches/0001-part_efi-Avoid-deluge-of-print-when-device-is-not-GP.patch
+      ./patches/0001-HACK-Add-UMS-as-last-boot-option.patch
     ];
   };
 }

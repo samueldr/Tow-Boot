@@ -1,0 +1,72 @@
+From caf874018549063a64248eb6c0ad2be3a6a06d87 Mon Sep 17 00:00:00 2001
+From: Samuel Dionne-Riel <samuel@dionne-riel.com>
+Date: Sat, 25 Mar 2023 17:48:47 -0400
+Subject: [PATCH] [HACK] Add UMS as last boot option
+
+This will run even when not connected to a PC, but in that case it will
+be as good as a no-op.
+
+This will make it possible for people without an eMMC adapter or NVMe
+adapter on-hand to inspect their on-board storage.
+---
+ include/config_distro_bootcmd.h   | 16 ++++++++++++++++
+ include/configs/rockchip-common.h |  9 ++++++++-
+ 2 files changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 7f931c5a62a..ab88ecb57ed 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -305,6 +305,22 @@
+ 	BOOT_TARGET_DEVICES_references_DHCP_without_CONFIG_CMD_DHCP
+ #endif
+ 
++#if CONFIG_IS_ENABLED(CMD_USB_MASS_STORAGE)
++#define BOOTENV_DEV_UMS(devtypeu, devtypel, instance) \
++	"bootcmd_ums=" /* Exposes drives via UMS in the order of least trivial to most trivial to use on a computer. */ \
++		"ums 0 mmc 0;"  /* eMMC */ \
++		"ums 0 nvme 0;" /* NVMe */ \
++		"ums 0 mmc 1;"  /* SD   */ \
++		"\0"
++#define BOOTENV_DEV_NAME_UMS(devtypeu, devtypel, instance) \
++	"ums "
++#else
++#define BOOTENV_DEV_UMS \
++	BOOT_TARGET_DEVICES_references_UMS_without_CONFIG_CMD_UMS
++#define BOOTENV_DEV_NAME_UMS \
++	BOOT_TARGET_DEVICES_references_UMS_without_CONFIG_CMD_UMS
++#endif
++
+ #if defined(CONFIG_CMD_DHCP) && defined(CONFIG_CMD_PXE)
+ #define BOOTENV_DEV_PXE(devtypeu, devtypel, instance) \
+ 	"bootcmd_pxe=" \
+diff --git a/include/configs/rockchip-common.h b/include/configs/rockchip-common.h
+index 3dbe59fcf38..6c411faedf3 100644
+--- a/include/configs/rockchip-common.h
++++ b/include/configs/rockchip-common.h
+@@ -106,6 +106,12 @@
+ 	#define BOOT_TARGET_DHCP(func)
+ #endif
+ 
++#if CONFIG_IS_ENABLED(CMD_USB_MASS_STORAGE)
++	#define BOOT_TARGET_UMS(func) func(UMS, ums, na)
++#else
++	#define BOOT_TARGET_UMS(func)
++#endif
++
+ #define BOOT_TARGET_DEVICES(func) \
+ 	BOOT_TARGET_NVME(func) \
+ 	BOOT_TARGET_MMC(func) \
+@@ -113,7 +119,8 @@
+ 	BOOT_TARGET_RKNAND(func) \
+ 	BOOT_TARGET_USB(func) \
+ 	BOOT_TARGET_PXE(func) \
+-	BOOT_TARGET_DHCP(func)
++	BOOT_TARGET_DHCP(func) \
++	BOOT_TARGET_UMS(func)
+ 
+ 
+ #ifdef CONFIG_ARM64
+-- 
+2.38.0
+
