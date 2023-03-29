@@ -8,14 +8,19 @@ Tow-Boot build infrastructure, and some of its semantics.
 These differences exist to make future Tow-Boot builds a drop-in replacement.
 
  - Baud rate at 115200 *including* proprietary loader and RAM init
+ - Will fallback to USB Mass Storage for either of eMMC, NVMe or SD when boot fails
 
 ## Supported features
 
  - SD boot
  - eMMC boot
- - NVMe boot
  - SPI install
  - USB Gadget (Mass Storage)
+ - NVMe works with USB Mass Storage
+
+## Unclear support
+
+ - NVMe boot (failed with hardware on-hand)
 
 ## Not working
 
@@ -28,9 +33,18 @@ These differences exist to make future Tow-Boot builds a drop-in replacement.
 
  - EFI
 
-## Installation
+## Building
 
-The shared disk image can be used, it should work as expected.
+Only the SPI build is expected to be used by end-users.
+
+```
+ $ nix-build -A radxa-rock5b.config.build.firmwareSPI
+...
+ $ ls -l result/binaries/Tow-Boot.spi.bin
+-r--r--r-- 4 root root 1866752 Dec 31  1969 result/binaries/Tow-Boot.spi.bin
+```
+
+## Installation
 
 ### Flashing to SPI
 
