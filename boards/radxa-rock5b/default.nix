@@ -68,10 +68,10 @@ in
 
     uBootVersion = "2017.09";
     src = pkgs.fetchFromGitHub {
-      owner = "radxa";
+      owner = "samueldr";
       repo = "u-boot";
-      rev = "77a5f377ab102272081ac6094a3e5892276de7d6"; # stable-5.10-rock5
-      sha256 = "sha256-SF9Aqbdo3CeCKVwCdKZAsc6IJoZxK/4BRafeA/tWJ3c=";
+      rev = "8a22101502b8a1525027eacd43e9fa3243b54cf0";
+      sha256 = "sha256-TCN7boIb66YWh8S1GOW93kDWisQlpgcde8az0ZA5ckk=";
     };
 
     # This is based on the Rockchip BSP
@@ -106,13 +106,6 @@ in
           idbloader.img
         )
       '')
-    ];
-
-    patches = [
-      ./patches/0001-BACKPORT-cmd-pxe-Increase-maximum-path-length.patch
-      ./patches/0001-rk3588_common-Disable-mtd-boot-target.patch
-      ./patches/0001-part_efi-Avoid-deluge-of-print-when-device-is-not-GP.patch
-      ./patches/0001-HACK-Add-UMS-as-last-boot-option.patch
     ];
   };
 }
