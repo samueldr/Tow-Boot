@@ -30,7 +30,6 @@ in
         USB_GADGET_MANUFACTURER = freeform ''"Radxa"'';
       })
       (helpers: with helpers; {
-        EFI_LOADER = yes;
         SYS_MMCSD_RAW_MODE_U_BOOT_USE_PARTITION = no;
         # Offset for U-Boot proper is hardcoded in our builder
         # 0x80000 / 512
@@ -55,7 +54,10 @@ in
       })
       (helpers: with helpers; {
         DISABLE_CONSOLE = no;
+      })
+      (helpers: with helpers; {
         CMD_BOOTEFI_HELLO_COMPILE = no;
+        EFI_LOADER = yes;
       })
       (helpers: with helpers; {
         OPTEE_CLIENT = no;
