@@ -14,13 +14,9 @@ These differences exist to make future Tow-Boot builds a drop-in replacement.
 
  - SD boot
  - eMMC boot
+ - NVMe boot
  - SPI install
  - USB Gadget (Mass Storage)
- - NVMe works with USB Mass Storage
-
-## Unclear support
-
- - NVMe boot (failed with hardware on-hand)
 
 ## Not working
 
