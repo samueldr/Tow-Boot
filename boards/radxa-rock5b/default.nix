@@ -70,8 +70,8 @@ in
     src = pkgs.fetchFromGitHub {
       owner = "samueldr";
       repo = "u-boot";
-      rev = "8a22101502b8a1525027eacd43e9fa3243b54cf0";
-      sha256 = "sha256-TCN7boIb66YWh8S1GOW93kDWisQlpgcde8az0ZA5ckk=";
+      rev = "61676961d049743c9f427e6ea7c3031f07fae98e";
+      sha256 = "sha256-gOFZlNhcSZnS8uIKoITwQZH00jQIua7Bsk1Yd37A5iE=";
     };
 
     # This is based on the Rockchip BSP
