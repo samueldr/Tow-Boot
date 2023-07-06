@@ -13,7 +13,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v4
       - uses: DeterminateSystems/magic-nix-cache-action@main # XXX lock to a version
       - id: devices-matrix
-        run: printf "::set-output name=matrix::" ; nix-instantiate --json --eval .ci/devices-list.nix
+        run: printf "matrix=" ; nix-instantiate --json --eval .ci/devices-list.nix >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{ steps.devices-matrix.outputs.matrix }}
 
