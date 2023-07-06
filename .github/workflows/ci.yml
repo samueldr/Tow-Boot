@@ -17,7 +17,7 @@ jobs:
       matrix: ${{ steps.devices-matrix.outputs.matrix }}
 
   build-all-devices:
-    name: build: ${{ matrix.device }}
+    name: "build: ${{ matrix.device }}"
     needs: generate-devices-matrix
     runs-on: ubuntu-22.04
     strategy:
