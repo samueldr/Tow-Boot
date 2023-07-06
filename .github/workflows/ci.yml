@@ -29,10 +29,9 @@ jobs:
           fetch-depth: 0
       - uses: DeterminateSystems/nix-installer-action@v4
       - uses: DeterminateSystems/magic-nix-cache-action@main # XXX lock to a version
-      - name: Build images for ${{ matrix.device }}
-        run: nix-build -A ${{ matrix.device }}
       - name: Build archive
-        run: nix-build -A ${{ matrix.device }}.build.archive
+        # NOTE: This is appending `-CI` the to the release identifier, such that it marks the build provenance.
+        run: nix-build --arg configuration '{ lib, ... }: { Tow-Boot.releaseIdentifier = lib.mkForce "-CI"; }' -A ${{ matrix.device }}.build.archive
       - name: Rename archive
         run: |
           archive=$(readlink -f result)
