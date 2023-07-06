@@ -29,9 +29,14 @@ jobs:
           fetch-depth: 0
       - uses: DeterminateSystems/nix-installer-action@v4
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - name: Build archive
+      - name: Build archive (release)
+        if: startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request'
         # NOTE: This is appending `-CI` the to the release identifier, such that it marks the build provenance.
-        run: nix-build --arg configuration '{ lib, ... }: { Tow-Boot.releaseIdentifier = lib.mkForce "-CI"; }' -A ${{ matrix.device }}.build.archive
+        run: nix-build --arg configuration -A ${{ matrix.device }}.build.archive
+      - name: Build archive (CI)
+        if: !(startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request')
+        # NOTE: This is appending `-CI` the to the release identifier, such that it marks the build provenance.
+        run: nix-build --arg configuration "{ lib, ... }: { Tow-Boot.releaseIdentifier = lib.mkForce ''-CI''; }" -A ${{ matrix.device }}.build.archive
       - name: Rename archive
         run: |
           archive=$(readlink -f result)
