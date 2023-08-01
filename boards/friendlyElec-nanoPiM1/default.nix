@@ -3,8 +3,8 @@
 {
   device = {
     manufacturer = "FriendlyELEC";
-    name = lib.mkDefault "NanoPi M1";
-    identifier = lib.mkDefault "friendlyElec-nanoPiM1";
+    name = "NanoPi M1";
+    identifier = "friendlyElec-nanoPiM1";
     productPageURL = "http://nanopi.io/nanopi-m1.html";
   };
 
