@@ -5,7 +5,7 @@
     manufacturer = "FriendlyELEC";
     name = "NanoPi M1";
     identifier = "friendlyElec-nanoPiM1";
-    productPageURL = "http://nanopi.io/nanopi-m1.html";
+    productPageURL = "https://wiki.friendlyelec.com/wiki/index.php/NanoPi_M1";
   };
 
   hardware = {
