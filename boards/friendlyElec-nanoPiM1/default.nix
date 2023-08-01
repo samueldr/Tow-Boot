@@ -14,6 +14,6 @@
   };
 
   Tow-Boot = {
-    defconfig = lib.mkDefault "nanopi_m1_defconfig";
+    defconfig = "nanopi_m1_defconfig";
   };
 }
