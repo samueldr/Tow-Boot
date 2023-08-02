@@ -1,5 +1,3 @@
-{ lib, ... }:
-
 {
   device = {
     manufacturer = "FriendlyELEC";
