@@ -144,7 +144,7 @@ in
     }))
 
     # Partial `bootstd` migration temporary measures
-    (helpers: with helpers; {
+    (mkIf (!config.Tow-Boot.buildUBoot) (helpers: with helpers; {
       # For now, it's outright disabled, we will need to re-evaluate our
       # infra to work with bootstd, but only after a larger proportion of
       # the devices default to `bootstd`.
@@ -153,7 +153,7 @@ in
       DISTRO_DEFAULTS = yes;
       USE_BOOTCOMMAND = yes;
       BOOTCOMMAND = freeform ''"run distro_bootcmd"'';
-    })
+    }))
 
     # Logo handling
     # -------------
