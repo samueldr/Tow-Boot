@@ -15,7 +15,7 @@ let
             , platform ? null
             , extraMakeFlags ? []
             , extraMeta ? {}
-            , version ? "2.10"
+            , version ? "2.12"
             , ... } @ args:
            stdenv.mkDerivation ({
 
@@ -26,18 +26,24 @@ let
       owner = "ARM-software";
       repo = "arm-trusted-firmware";
       rev = "v${version}";
-      sha256 = "sha256-CAuftVST9Fje/DWaaoX0K2SfWwlGMaUFG4huuwsTOSU=";
+      sha256 = "sha256-PCUKLfmvIBiJqVmKSUKkNig1h44+4RypZ04BvJ+HP6M=";
     };
 
     depsBuildBuild = [ buildPackages.stdenv.cc ];
 
     # For Cortex-M0 firmware in RK3399
     nativeBuildInputs = [ pkgsCross.arm-embedded.stdenv.cc ];
+    # Make the new toolchain guessing (from 2.11+) happy
+    # https://github.com/ARM-software/arm-trusted-firmware/blob/4ec2948fe3f65dba2f19e691e702f7de2949179c/make_helpers/toolchains/rk3399-m0.mk#L21-L22
+    rk3399-m0-oc = "${pkgsCross.arm-embedded.stdenv.cc.targetPrefix}objcopy";
 
     buildInputs = [ openssl ];
 
     makeFlags = [
       "CROSS_COMPILE=${stdenv.cc.targetPrefix}"
+      # Make the new toolchain guessing (from 2.11+) happy
+      "AS=${stdenv.cc.targetPrefix}cc"
+      "OD=${stdenv.cc.targetPrefix}objdump"
     ] ++ (lib.optional (platform != null) "PLAT=${platform}")
       ++ extraMakeFlags;
 
