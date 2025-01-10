@@ -13,19 +13,15 @@ SD card.
 # dd if=mmcboot.installer.img of=/dev/XXX bs=1M oflag=direct,sync status=progress
 ```
 
-Once done, power-off your *Pinetab (A64)*, remove its battery, and insert the
+Once done, power-off your *Pinetab (A64)* and insert the
 SD card in the SD card slot.
 
-Put back the battery in the *Pinetab (A64)*, and power it on.
+Power it on.
 
 > Unless you know the battery is completely charged, it is recommended to
-> connect the phone to a power source. Just in case.
+> connect the tablet to a power source. Just in case.
 
-When starting up with Tow-Boot, which the installer image use, the phone will
-vibrate slightly and the LED will turn red. After a short moment, the LED
-should turn yellow.
-
-A few moments later the display will turn on with a blue colour, or will
+When starting up with Tow-Boot, which the installer image use, the display will turn on with a blue colour, or will
 directly boot to the installer GUI.
 
 In the installer GUI, select *“Install Tow-Boot to eMMC Boot”*. It is not
