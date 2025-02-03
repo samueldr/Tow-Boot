@@ -17,7 +17,7 @@ let
         owner = "radxa";
         repo = "fip";
         rev = "4e7cacb68682bf2223974895d8e0d6368beac101";
-        sha256 = "sha256-QZ1tqQpnvWrYrkxik3S9dXa0+KqmsH8huFqkw2iyOBk=";
+        hash = "sha256-QZ1tqQpnvWrYrkxik3S9dXa0+KqmsH8huFqkw2iyOBk=";
       };
 
       installPhase = ''
