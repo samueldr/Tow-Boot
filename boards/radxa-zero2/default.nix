@@ -3,7 +3,7 @@
 let
   # TODO: remove once imported in the LibreELEC FIP frmware packages
   #       alternatively reconsider how we handle vendor-provided blobs?
-  radxa-fip = pkgs.callPackage (
+  radxa-fip = pkgs.Tow-Boot.callPackage (
     { stdenv
     , lib
     , fetchFromGitHub
