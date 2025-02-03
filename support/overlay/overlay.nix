@@ -149,5 +149,26 @@ in
         ;
       })
     ;
+
+    fetchzip =
+      args:
+      final.fetchzip (args // {
+        name =
+          args.name or (
+            builtins.concatStringsSep "-" [
+              (builtins.baseNameOf args.url)
+              "source"
+            ]
+          )
+        ;
+      })
+    ;
+
+    # Forbid fetchurl
+    fetchurl =
+      args:
+      throw "The `fetchurl` fetcher is disallowed in Tow-Boot. Use `fetchzip` for archives."
+      {}
+    ;
   });
 }
