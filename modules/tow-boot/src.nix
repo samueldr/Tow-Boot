@@ -88,7 +88,7 @@ in
         let knownHashes = config.Tow-Boot.knownHashes.U-Boot; in
         mkDefault (pkgs.Tow-Boot.fetchurl {
           url = "ftp://ftp.denx.de/pub/u-boot/u-boot-${uBootVersion}.tar.bz2";
-          sha256 =
+          hash =
             if knownHashes ? ${uBootVersion}
             then knownHashes.${uBootVersion}
             else builtins.throw "No known hashes for upstream release U-Boot version ${uBootVersion}"
@@ -100,7 +100,7 @@ in
           repo = "U-Boot";
           owner = "Tow-Boot";
           rev = "${tag}";
-          sha256 =
+          hash =
             if knownHashes ? ${tag}
             then knownHashes.${tag}
             else builtins.throw "No known hashes for Tow-Boot-flavoured U-Boot matching tag ${tag}"
