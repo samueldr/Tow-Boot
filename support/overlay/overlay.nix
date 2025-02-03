@@ -121,5 +121,21 @@ in
         ;
       })
     ;
+
+    fetchgit =
+      args:
+      final.fetchgit (args // {
+        name =
+          args.name or (
+            builtins.concatStringsSep "-" [
+              (builtins.baseNameOf args.url)
+              # NOTE: using `or ""` to make this error out in `fetchFromGitHub` instead of here.
+              (args.rev or args.tag or "")
+              "source"
+            ]
+          )
+        ;
+      })
+    ;
   });
 }
