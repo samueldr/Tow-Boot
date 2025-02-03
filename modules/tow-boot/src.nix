@@ -86,7 +86,7 @@ in
 
       src = if config.Tow-Boot.buildUBoot then
         let knownHashes = config.Tow-Boot.knownHashes.U-Boot; in
-        mkDefault (pkgs.fetchurl {
+        mkDefault (pkgs.Tow-Boot.fetchurl {
           url = "ftp://ftp.denx.de/pub/u-boot/u-boot-${uBootVersion}.tar.bz2";
           sha256 =
             if knownHashes ? ${uBootVersion}
@@ -96,7 +96,7 @@ in
         })
       else
         let knownHashes = config.Tow-Boot.knownHashes.Tow-Boot; in
-        mkDefault (pkgs.fetchFromGitHub {
+        mkDefault (pkgs.Tow-Boot.fetchFromGitHub {
           repo = "U-Boot";
           owner = "Tow-Boot";
           rev = "${tag}";
