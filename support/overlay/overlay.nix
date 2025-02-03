@@ -137,5 +137,17 @@ in
         ;
       })
     ;
+
+    fetchpatch =
+      args:
+      final.fetchpatch (args // {
+        name =
+          args.name or (
+            (builtins.baseNameOf args.url)
+            # NOTE: not appending `-source`, this will keep only the filename, and thus the `.patch` ending.
+          )
+        ;
+      })
+    ;
   });
 }
