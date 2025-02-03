@@ -7,7 +7,7 @@ let
     versionOlder
     versionAtLeast
   ;
-  inherit (pkgs)
+  inherit (pkgs.Tow-Boot)
     fetchpatch
   ;
 
